@@ -8,7 +8,7 @@ class BooksController extends Controller
 {
     public function index()
     {
-        $books = Book::all();
+        $books = Book::where("user_id", auth()->id())->get();
 
         return view ('books.read', compact('books'));
     }
@@ -26,6 +26,8 @@ class BooksController extends Controller
     		"summary" => ["required", "min:3"]
         ]);
 
+        $attributes['user_id'] = auth()->id();
+
         Book::create($attributes);
 
         return redirect("/books");
@@ -33,6 +35,8 @@ class BooksController extends Controller
 
     public function show(Book $book)
     {
+        abort_if($book->user_id !== auth()->id(), 403);
+       
         return view("books.view", compact("book"));
         
     }
@@ -56,6 +60,7 @@ class BooksController extends Controller
 
     public function edit(Book $book)
     {
+        abort_if($book->user_id !== auth()->id(), 403);
         return view("books.edit", compact("book"));
     }
 }
