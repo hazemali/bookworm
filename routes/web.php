@@ -15,9 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(); // if guest
-Route::resource('books', 'BooksController'); // if authenticated
+Auth::routes(); 
+Route::resource('books', 'BooksController')->middleware('auth');
 
-
-Route::resource('profile', 'ProfileController'); // if authenticated
+Route::resource('profile', 'ProfileController')->middleware('auth');
 
