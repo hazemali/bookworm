@@ -18,5 +18,6 @@ Route::get('/', function () {
 Auth::routes(); // if guest
 Route::resource('books', 'BooksController'); // if authenticated
 
-Route::get('/profile', 'ProfileController@index'); // if authenticated
+
+Route::resource('profile', 'ProfileController'); // if authenticated
 
